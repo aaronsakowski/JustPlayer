@@ -30,6 +30,7 @@ typedef void (^BlkPlayerItemLoadTimeRange)(float start, float duration);
 - (CMTime)currentTime;
 - (void)playerSeekto:(float)position;
 - (BOOL)isPlaying;
+- (BOOL)loop;
 - (void)prepareForURL:(NSURL*)url;
 - (CMTime)playerItemDuration;
 - (AVPlayerItem*)currentItem;

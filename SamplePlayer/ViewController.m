@@ -16,8 +16,8 @@
 
 @implementation ViewController
 
-//#define kSampleURL @"http://devimages.apple.com/samplecode/adDemo/ad.m3u8"
-#define kSampleURL @"http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"
+#define kSampleURL @"http://devimages.apple.com/samplecode/adDemo/ad.m3u8"
+//#define kSampleURL @"http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8"
 
 - (void)viewDidLoad
 {

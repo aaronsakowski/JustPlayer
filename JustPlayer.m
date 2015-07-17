@@ -38,6 +38,7 @@ static void *PlayerItemTimeRangesObservationContext = &PlayerItemTimeRangesObser
     if (self.playerItem) {
         [self.playerItem removeObserver: self forKeyPath: @"status"];
         [self.playerItem removeObserver: self forKeyPath: @"loadedTimeRanges"];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         [self removeScrubberTimer];
         self.playerItem = nil;
     }
@@ -50,6 +51,7 @@ static void *PlayerItemTimeRangesObservationContext = &PlayerItemTimeRangesObser
     [self cleanPreviousResources];
     self.playerItem = [AVPlayerItem playerItemWithURL: url];
 
+
     [self.playerItem addObserver:self
                       forKeyPath:@"status"
                          options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew
@@ -60,6 +62,13 @@ static void *PlayerItemTimeRangesObservationContext = &PlayerItemTimeRangesObser
                          context:PlayerItemTimeRangesObservationContext];
 
     self.player = [AVPlayer playerWithPlayerItem: self.playerItem];
+
+    self.player.actionAtItemEnd = AVPlayerActionAtItemEndNone;
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playerItemDidReachEnd:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:[self.player currentItem]];
 
 }
 
@@ -154,6 +163,13 @@ static void *PlayerItemTimeRangesObservationContext = &PlayerItemTimeRangesObser
 	}
 }
 
+- (void)playerItemDidReachEnd:(NSNotification *)notification
+{
+    if(self.loop){
+        AVPlayerItem *p = [notification object];
+        [p seekToTime:kCMTimeZero];
+    }
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
                         change:(NSDictionary *)change context:(void *)context {
