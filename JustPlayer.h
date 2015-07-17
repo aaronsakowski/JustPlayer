@@ -23,6 +23,7 @@ typedef void (^BlkPlayerItemLoadTimeRange)(float start, float duration);
 @property (nonatomic, copy) BlkPlayerItemLoadTimeRange blkPlayerItemLoadTimeRange;
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 @property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, assign) BOOL loop;
 
 - (JustPlayer*)initWithURL:(NSURL*)url;
 - (void)play;
@@ -30,7 +31,6 @@ typedef void (^BlkPlayerItemLoadTimeRange)(float start, float duration);
 - (CMTime)currentTime;
 - (void)playerSeekto:(float)position;
 - (BOOL)isPlaying;
-- (BOOL)loop;
 - (void)prepareForURL:(NSURL*)url;
 - (CMTime)playerItemDuration;
 - (AVPlayerItem*)currentItem;
